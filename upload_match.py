@@ -1,6 +1,9 @@
 from supabase import create_client
 from datetime import datetime
+from dotenv import load_dotenv
 import os
+
+load_dotenv(".env.local")  
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
@@ -20,6 +23,6 @@ def upload_match(player1, player2, p1_character, p2_character, winner):
     print(res)
 
 # Test upload
-# upload_match("Jon", "Justin", "Donkey Kong", "Kazuya","Jon")
+upload_match("Jon", "Justin", "Donkey Kong", "Yoshi","Jon")
 
 

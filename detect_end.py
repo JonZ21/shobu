@@ -40,13 +40,6 @@ def crop_frame(frame):
     crop = frame[280:320, 100:180] # crop for 'out at' P1 ( p2 wins) 
     return crop
 
-
-# import easyocr
-# reader = easyocr.Reader(['en']) 
-# result = reader.readtext(gray)
-# print("result", result[0][1])
-
-
 # count = 0
 # for i in range(9):
 #     index = str(i+1)
