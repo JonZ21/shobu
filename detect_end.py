@@ -2,9 +2,10 @@ import cv2
 import pytesseract
 import numpy as np
 
-def useTemplate(frame, index = ""):
+def detectEnd(frame, index = ""):
     # Template matching is based on raw pixel data. 
-    modified_frame = modify_frame(frame) 
+    crop = crop_frame(frame)
+    modified_frame = modify_frame(crop) 
     template = cv2.imread("template.png", cv2.IMREAD_GRAYSCALE)
     res = cv2.matchTemplate(modified_frame, template, cv2.TM_CCORR_NORMED)
 
@@ -26,8 +27,7 @@ def useOCR(frame, index = ""):
 
 def modify_frame(frame):
     # Crop bottom-right corner (adjust coordinates as needed)
-    crop = crop_frame(frame)
-    gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)
     scale_factor = 2
     thresh = cv2.resize(thresh, None, fx=scale_factor, fy=scale_factor, interpolation=cv2.INTER_CUBIC)
@@ -39,6 +39,21 @@ def crop_frame(frame):
     # crop = frame[h-40:h-10, w-100:w-10] # crop for the save replay area
     crop = frame[280:320, 100:180] # crop for 'out at' P1 ( p2 wins) 
     return crop
+
+def is_player_2_winner(frame):
+    h, w, _ = frame.shape
+    crop = frame[280:320, 350:530] # Player 2 wins if this crop gets "---", meaning they were not out at a time
+    modified_frame = modify_frame(crop)
+    template = cv2.imread("nullTimeOut.png", cv2.IMREAD_GRAYSCALE)
+    res = cv2.matchTemplate(modified_frame, template, cv2.TM_CCORR_NORMED)
+
+    loc = np.where(res >= 0.9) 
+    if len(loc[0]) > 0:
+        print("Player 2 wins detected!" + str(res.max()))
+        return True
+    print("Player 1 wins detected!")
+    return False
+
 
 # count = 0
 # for i in range(9):
@@ -61,7 +76,11 @@ def crop_frame(frame):
 #         count += 1
 
 
-# bruh = cv2.imread("capture71.png")
+# bruh = cv2.imread("Found4.png")
 # modified_frame = modify_frame(bruh)
-# cv2.imwrite("mod.png", modified_frame)
-# useTemplate(bruh)
+# cv2.imwrite("template2.png", modified_frame)
+# detectEnd(bruh)
+
+
+frame = cv2.imread("Found5.png")
+is_player_2_winner(frame)

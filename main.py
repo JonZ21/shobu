@@ -13,35 +13,26 @@ def main_loop():
     if not cap.isOpened():
         print("Failed to open video device!")
         return
-    count = 73
+    count = 236
     found_count = 0 
     while True:
         ret, frame = cap.read()
         if not ret:
             continue  # skip if frame not ready
 
-        if useTemplate(frame):
-            print("End detected! Saving frame or taking action...")
-            # Save the frame or trigger your upload/log
-            cv2.imwrite("Found"+str(found_count)+".png", frame)
-            found_count += 1
-            # Could also save a small video clip here if needed
-            continue
+        # if useTemplate(frame):
+        #     print("End detected! Saving frame or taking action...")
+        #     # Save the frame or trigger your upload/log
+        #     cv2.imwrite("Found"+str(found_count)+".png", frame)
+        #     found_count += 1
+        #     # Could also save a small video clip here if needed
+        #     continue
 
-         # Wait for user input to save the current frame
-        # user_input = input("Press Enter to save current frame, or type 'q' to quit: ")
-        # if user_input == "y":
-        #     cv2.imwrite("capture" + str(count) + ".png", frame)
-        #     print("saved")
-        #     count += 1
-        # elif user_input.lower() == "q":
-        #     print("Exiting loop.")
-        #     break
 
-        # cv2.imwrite("capture" + str(count) + ".png", frame)
-        # print(f"Screenshot saved as capture{count}.png")
-        # count += 1
-        # time.sleep(5)  # Wait 5 seconds before next screenshot
+        cv2.imwrite("capture" + str(count) + ".png", frame)
+        print(f"Screenshot saved as capture{count}.png")
+        count += 1
+        time.sleep(5)  # Wait 5 seconds before next screenshot
     cap.release()
 
 if __name__ == "__main__":
