@@ -2,7 +2,7 @@ import cv2
 import pytesseract
 import numpy as np
 
-def detectEnd(frame, index = ""):
+def detect_end(frame, index = ""):
     # Template matching is based on raw pixel data. 
     crop = crop_frame(frame)
     modified_frame = modify_frame(crop) 
@@ -16,7 +16,7 @@ def detectEnd(frame, index = ""):
     return False
 
 
-def useOCR(frame, index = ""):
+def use_OCR(frame, index = ""):
     modified_frame = modify_frame(frame)
     config = "--psm 11"  # Treat image as a single text line
 
@@ -82,5 +82,5 @@ def is_player_2_winner(frame):
 # detectEnd(bruh)
 
 
-frame = cv2.imread("Found5.png")
-is_player_2_winner(frame)
+# frame = cv2.imread("Found5.png")
+# is_player_2_winner(frame)

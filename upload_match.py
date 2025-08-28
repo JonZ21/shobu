@@ -23,6 +23,6 @@ def upload_match(player1, player2, p1_character, p2_character, winner):
     print(res)
 
 # Test upload
-upload_match("Jon", "Justin", "Donkey Kong", "Yoshi","Jon")
+# upload_match("Jon", "Justin", "Donkey Kong", "Yoshi","Jon")
 
 

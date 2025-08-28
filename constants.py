@@ -45,7 +45,7 @@ characters = [
     "Sonic",
     "King Dedede",
     "Olimar",
-    "Alph"
+    "Alph",
     "Lucario",
     "R.O.B.",
     "Toon Link",

@@ -87,9 +87,8 @@ def match_character(ocr_text, threshold=50):
     else:
         return None
 
-def get_winner():
 
-
-print("Testing OCR and character matching...")
-image = cv2.imread("Found34.png")
-print(read_text_from_image(image))
+# print("Testing OCR and character matching...")
+# image = cv2.imread("Found34.png")
+# print(read_text_from_image(image))
+# print(match_character("VILLAGER"))  # Test function
