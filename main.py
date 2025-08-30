@@ -16,30 +16,30 @@ def main_loop():
         print("Failed to open video device!")
         return
     count = 236
-    found_count = 0 
+    found_count = 0
     in_end_screen = False
-    saving_results = False
+    saved_results = False
     while True:
         ret, frame = cap.read()
         if not ret:
             continue  # skip if frame not ready
 
-        if not saving_results:
-            if detect_end(frame):
-                print("end detected")
-                if found_count >= 3 and not in_end_screen:
-                    in_end_screen = True
-                    found_count = 0
-                else:  
-                    found_count += 1
-
-            else:
-                print("no end detected")
-                in_end_screen = False
+        if detect_end(frame) and not in_end_screen:
+            print("end detected")
+            if found_count >= 3:
+                in_end_screen = True
+            else:  
+                found_count += 1
+        elif not detect_end(frame) and in_end_screen:
+            print("end no longer detected")
+            in_end_screen = False
+            saved_results = False
+            found_count = 0
             
         if in_end_screen:
+            if saved_results:
+                continue
             print("End detected! Saving frame or taking action...")
-            saving_results = True
             # Save the frame or trigger your upload/log
             cv2.imwrite("EndScreen.png", frame)
             results = read_text_from_image(frame)
@@ -53,8 +53,7 @@ def main_loop():
                 results[3], 
                 results[1] if p2_winner else results[0]
             )
-            time.sleep(120)
-            saving_results = False
+            saved_results = True
 
     
             
